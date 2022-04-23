@@ -1,0 +1,166 @@
+@charset "utf-8";
+
+.MainUpRow {
+	font-size: 30;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	width: calc(100% - 30px);
+	height: auto;
+	margin: 0px 5px;
+	padding: 10px;
+	border-bottom: 3px solid transparent;
+	border-image: linear-gradient(to right, #0B0E7F, white);
+	-webkit-border-image: -webkit-linear-gradient(left, #0B0E7F, white);
+	-o-border-image: -o-linear-gradient(left, #0B0E7F, white);
+	border-image-slice: 1;
+	visibility: visible;
+	overflow: hidden;
+}
+
+.LeftPanel {
+	position: absolute;
+	float: left;
+	width: 120px;
+	height: calc(100% - 105px);
+	margin: 5px;
+	padding: 15px;
+	text-align: right;
+	border-right: 3px solid transparent;
+	border-image: linear-gradient(#0B0E7F, white);
+	-webkit-border-image: -webkit-linear-gradient(#0B0E7F, white);
+	-o-border-image: -o-linear-gradient(#0B0E7F, white);
+	border-image-slice: 1;
+}
+
+.LogoSiteButton {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	border: none;
+	max-height: 40px;
+	float: left;
+	margin: 0px 10px 0px 10px;
+	padding: 0px;
+	overflow: hidden;
+	left: 0px;
+	top: 0px;
+}
+
+.NameSite_block {
+	position: relative;
+	width: 100%;
+	height: 40px;
+	margin: 0px;
+	padding: 0px
+}
+
+.NameSite_text {
+	position: relative;
+	float: left;
+	margin: 0px;
+	padding: 0px
+}
+
+.NameSite_img {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	border: none;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	left: 0;
+	top: 0;
+}
+
+.LiMainMenuSyte {
+	font-size: 19px;
+	font-weight: 100;
+	list-style-type: none;
+	margin: 10px 0px
+}
+
+.MetricsPanel {
+	position: absolute;
+	float: none;
+	margin: 0px;
+	padding: 0px;
+	bottom: 0px;
+	display: grid;
+	align-content: center;
+	text-align: center;
+	width: 120px;
+}
+
+.ContentConteiner {
+	position: relative;
+	float: left;
+	left: 165px;
+	max-width: 840px;
+	height: calc(100% - 85px);
+	margin-top: 10px;
+	margin-right: 20px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	padding: 5px;
+	overflow: hidden;
+}
+.ContentConteiner .ContentArticleHeader {
+	width: 100%;
+	text-align: center;
+	border-bottom: 3px solid transparent;
+	border-image: linear-gradient(to right, #0B0E7F, white);
+	-webkit-border-image: -webkit-linear-gradient(left, #0B0E7F, white);
+	-o-border-image: -o-linear-gradient(left, #0B0E7F, white);
+	border-image-slice: 1;
+	font-size: 30px;
+}
+
+
+.ListElementArticle {
+	position: relative;
+	width: 100%;
+	height: 150px;
+	margin-top: 15px;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	padding: 5px
+}
+
+.LogoListElementArticle {
+	position: relative;
+	width: 180px;
+	height: 100%;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding: 0px;
+	vertical-align: central;
+}
+.ListElementArticle .LogoListElementArticle .ImgLogoListElementArticle {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: table-cell;
+}
+.ImgLogoListElementArticle a img {
+	width: 100%;
+	height: auto;
+}
+
+.ContentListElementArticle {
+	position: relative;
+	margin: 5px;
+	padding: 2px;
+	overflow: hidden;
+}
+
+table tbody .ContentListElementArticleFooter {
+	color: rgba(76,76,76,1.00);
+}
+
+tbody tr .ContentListElementArticleAutor {
+	color: rgba(76,76,76,1.00);
+}
