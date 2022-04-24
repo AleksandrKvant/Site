@@ -1,0 +1,473 @@
+@charset "utf-8";
+
+.MainUpRow {
+	font-size: 30;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	width: calc(100% - 30px);
+	height: auto;
+	margin: 0px 5px;
+	padding: 10px;
+	border-bottom: 3px solid transparent;
+	border-image: linear-gradient(to right, #0B0E7F, white);
+	-webkit-border-image: -webkit-linear-gradient(left, #0B0E7F, white);
+	-o-border-image: -o-linear-gradient(left, #0B0E7F, white);
+	border-image-slice: 1;
+	visibility: visible;
+	overflow: hidden;
+}
+.LeftPanel {
+	position: absolute;
+	float: left;
+	width: 120px;
+	height: calc(100% - 90px);
+	margin: 5px;
+	padding: 5px 15px 5px 15px;
+	text-align: right;
+	border-right: 3px solid transparent;
+	border-image: linear-gradient(#0B0E7F, white);
+	-webkit-border-image: -webkit-linear-gradient(#0B0E7F, white);
+	-o-border-image: -o-linear-gradient(#0B0E7F, white);
+	border-image-slice: 1;
+}
+.LogoSiteButton {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	border: none;
+	max-height: 40px;
+	float: left;
+	margin: 0px 10px 0px 10px;
+	padding: 0px;
+	overflow: hidden;
+	left: 0px;
+	top: 0px;
+}
+.NameSite_block {
+	position: absolute;
+	width: 100%;
+	height: 40px;
+	margin: 0px;
+	padding: 0px;
+	left: 70px;
+}
+.NameSite_text {
+	position: relative;
+	float: left;
+	margin: 0px;
+	padding: 0px
+}
+.NameSite_img {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	border: none;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	left: 0;
+	top: 0;
+}
+.UlMainMenuSyte {
+	margin: 0px;
+}
+.LiMainMenuSyte {
+	font-size: 19px;
+	font-weight: 100;
+	list-style-type: none;
+	margin: 10px 0px
+}
+.MetricsPanel {
+	position: absolute;
+	float: none;
+	margin: 0px;
+	padding: 0px;
+	bottom: 0px;
+	display: grid;
+	align-content: center;
+	text-align: center;
+	width: 120px;
+}
+.ContentConteiner {
+	position: absolute;
+	float: left;
+	left: 165px;
+	max-width: 840px;
+	height: calc(100% - 90px);
+	margin-top: 10px;
+	margin-right: 20px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	padding: 5px;
+	overflow: auto;
+}
+.ContentConteiner .ContentArticleHeader {
+	width: 100%;
+	text-align: center;
+	border-bottom: 3px solid transparent;
+	border-image: linear-gradient(to right, #0B0E7F, white);
+	-webkit-border-image: -webkit-linear-gradient(left, #0B0E7F, white);
+	-o-border-image: -o-linear-gradient(left, #0B0E7F, white);
+	border-image-slice: 1;
+	font-size: 30px;
+	padding: 10px 0px 10px 0px;
+}
+.ContentConteiner .ContentArticleFooter {
+	width: 100%;
+	text-align: center;
+	border-bottom: 3px solid transparent;
+	border-image: linear-gradient(to right, #0B0E7F, white);
+	-webkit-border-image: -webkit-linear-gradient(left, #0B0E7F, white);
+	-o-border-image: -o-linear-gradient(left, #0B0E7F, white);
+	border-image-slice: 1;
+	font-size: 16px;
+	padding: 10px 0px 10px 0px;
+}
+.ListElementArticle {
+	position: relative;
+	width: 100%;
+	height: 150px;
+	margin-top: 15px;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	padding: 5px
+}
+.LogoListElementArticle {
+	position: relative;
+	width: 180px;
+	height: 100%;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding: 0px;
+	vertical-align: central;
+}
+.ListElementArticle .LogoListElementArticle .ImgLogoListElementArticle {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: table-cell;
+}
+.ImgLogoListElementArticle a img {
+	width: 100%;
+	height: auto;
+}
+.ImgLogoListElementArticle img {
+	width: 100%;
+	height: auto;
+}
+.ContentListElementArticle {
+	position: relative;
+	margin: 5px;
+	padding: 2px;
+	overflow: hidden;
+}
+table tbody .ContentListElementArticleFooter {
+	color: rgba(76,76,76,1.00);
+
+}
+tbody tr .ContentListElementArticleAutor {
+	color: rgba(76,76,76,1.00);
+}
+tr td .ContentListElementArticleAbout {
+	max-height: 100px;
+	float: none;
+	overflow: hidden;
+}
+tr td .ContentListElementArticleName {
+	text-decoration: none;
+	color: #2A0D4E !important;
+	text-shadow: 1px 0px 0px;
+}
+.ContentConteiner .ContentArticleHeader .ContentArticleHeaderArticles {
+	text-decoration: none;
+	color: #2E125B !important;
+	text-shadow: 1px 1px 0px;
+}
+.LogoElementArticle {
+	position: relative;
+	width: 240px;
+	height: 100%;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding: 10px;
+	vertical-align: central;
+}
+.TrContentElementArticleHeader {	height: 200px;
+	border-bottom: 3px solid transparent;
+	border-image: linear-gradient(to right, #0B0E7F, white);
+	-webkit-border-image: -webkit-linear-gradient(left, #0B0E7F, white);
+	-o-border-image: -o-linear-gradient(left, #0B0E7F, white);
+	border-image-slice: 1;
+}
+tr td .ContentElementArticleHeader {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	font-size: 30px;
+	padding: 10px 0px 10px 0px;
+}
+tr td .ContentElementArticleAbout {
+	margin: 0px 10px 0px 10px;
+	padding: 0px;
+	float: none;
+	overflow: hidden;
+}
+tr td .ContentElementArticleText {
+	margin: 0px 5px 0px 10px;
+	padding: 10px 0px 10px 0px;
+	float: none;
+	overflow: hidden;
+}
+
+.ContentElementArticleText pre{
+    padding: 0;
+    background: none;
+    border: none;
+	overflow-x: auto;
+	max-width: 800px;
+}
+
+pre.hightlight-1c br{display: none;}
+pre.hightlight-1c > pre{border: none;background: none;margin: 0;padding:0;}
+
+/* Start:/bitrix/templates/adaptive/js/ckeditor/plugins/codesnippet/lib/highlight/styles/xcode.css*/
+/*
+
+XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
+
+*/
+
+.hljs {
+  display: block; padding: 0.5em;
+  background: #fff; color: black;
+}
+
+.hljs-comment,
+.hljs-template_comment,
+.hljs-javadoc,
+.hljs-comment * {
+  color: #006a00;
+}
+
+.hljs-keyword,
+.hljs-literal,
+.nginx .hljs-title {
+  color: #aa0d91;
+}
+.method,
+.hljs-list .hljs-title,
+.hljs-tag .hljs-title,
+.setting .hljs-value,
+.hljs-winutils,
+.tex .hljs-command,
+.http .hljs-title,
+.hljs-request,
+.hljs-status {
+  color: #008;
+}
+
+.hljs-envvar,
+.tex .hljs-special {
+  color: #660;
+}
+
+.hljs-string {
+  color: #c41a16;
+}
+.hljs-tag .hljs-value,
+.hljs-cdata,
+.hljs-filter .hljs-argument,
+.hljs-attr_selector,
+.apache .hljs-cbracket,
+.hljs-date,
+.hljs-regexp {
+  color: #080;
+}
+
+.hljs-sub .hljs-identifier,
+.hljs-pi,
+.hljs-tag,
+.hljs-tag .hljs-keyword,
+.hljs-decorator,
+.ini .hljs-title,
+.hljs-shebang,
+.hljs-prompt,
+.hljs-hexcolor,
+.hljs-rules .hljs-value,
+.css .hljs-value .hljs-number,
+.hljs-symbol,
+.hljs-symbol .hljs-string,
+.hljs-number,
+.css .hljs-function,
+.clojure .hljs-title,
+.clojure .hljs-built_in,
+.hljs-function .hljs-title,
+.coffeescript .hljs-attribute {
+  color: #1c00cf;
+}
+
+.hljs-class .hljs-title,
+.haskell .hljs-type,
+.smalltalk .hljs-class,
+.hljs-javadoctag,
+.hljs-yardoctag,
+.hljs-phpdoc,
+.hljs-typename,
+.hljs-tag .hljs-attribute,
+.hljs-doctype,
+.hljs-class .hljs-id,
+.hljs-built_in,
+.setting,
+.hljs-params,
+.clojure .hljs-attribute {
+  color: #5c2699;
+}
+
+.hljs-variable {
+ color: #3f6e74;
+}
+.css .hljs-tag,
+.hljs-rules .hljs-property,
+.hljs-pseudo,
+.hljs-subst {
+  color: #000;
+}
+
+.css .hljs-class,
+.css .hljs-id {
+  color: #9B703F;
+}
+
+.hljs-value .hljs-important {
+  color: #ff7700;
+  font-weight: bold;
+}
+
+.hljs-rules .hljs-keyword {
+  color: #C5AF75;
+}
+
+.hljs-annotation,
+.apache .hljs-sqbracket,
+.nginx .hljs-built_in {
+  color: #9B859D;
+}
+
+.hljs-preprocessor,
+.hljs-preprocessor *,
+.hljs-pragma {
+  color: #643820;
+}
+
+.tex .hljs-formula {
+  background-color: #EEE;
+  font-style: italic;
+}
+
+.diff .hljs-header,
+.hljs-chunk {
+  color: #808080;
+  font-weight: bold;
+}
+
+.diff .hljs-change {
+  background-color: #BCCFF9;
+}
+
+.hljs-addition {
+  background-color: #BAEEBA;
+}
+
+.hljs-deletion {
+  background-color: #FFC8BD;
+}
+
+.hljs-comment .hljs-yardoctag {
+  font-weight: bold;
+}
+
+.method .hljs-id {
+  color: #000;
+}
+
+/* 1c 8*/
+.language-onec8 {
+  color: blue;
+  font-family: "Consolas", "JetBrains Mono", "Courier New", Courier, monospace;
+  font-size: 0.85em;
+}
+
+.language-onec8 .hljs-params{
+  color: blue;
+}
+.language-onec8 .hljs-title{
+  color: blue;
+}
+
+.language-onec8 .hljs-special_symbols{
+  color: red;
+}
+.language-onec8 .hljs-keyword{
+  color: red;
+}
+
+.language-onec8 .hljs-string{
+  color: black;
+}
+.language-onec8 .hljs-number {
+  color: black;
+}
+
+.language-onec8 .hljs-comment{
+  color: #008200;
+}
+
+.language-onec8 .hljs-meta{
+  color: #963200;
+}
+.language-onec8 .hljs-preprocessor{
+  color: #963200;
+}
+
+/* 1c 7*/
+.language-onec7 {
+  color: blue;
+  font-family: "Consolas", "JetBrains Mono", "Courier New", Courier, monospace;
+  font-size: 0.85em;
+}
+
+.language-onec7 .hljs-params{
+  color: blue;
+}
+.language-onec7 .hljs-title{
+  color: blue;
+}
+
+.language-onec7 .hljs-special_symbols{
+  color: red;
+}
+.language-onec7 .hljs-keyword{
+  color: red;
+}
+
+.language-onec7 .hljs-string{
+  color: black;
+}
+.language-onec7 .hljs-number {
+  color: black;
+}
+
+.language-onec7 .hljs-comment{
+  color: #008200;
+}
+
+.language-onec7 .hljs-meta{
+  color: #963200;
+}
+.language-onec7 .hljs-preprocessor{
+  color: #963200;
+}
+/* End */

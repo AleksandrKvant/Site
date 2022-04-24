@@ -84,7 +84,8 @@
 	###
 	### Внутренние
 		private $_Arr_ContentType;			// Массив структуры типов контента страницы
-				// Array {				//			ВидКонтента:					// Тип контента
+				// Array {
+				//			ВидКонтента:					// Тип контента
 				//					Новости
 				//					Статьи
 				//					ТоварыИУслуги
@@ -94,7 +95,8 @@
 				//					Партнеры
 				//			КоличествоЭлементов				// количество элементов
 				//			НеограниченноеКоличество		// признак неограниченного количества
-				//			КоличествоЭлементовНаСтранице	// выводимое количество элементов на страницу				//			СтраницаНаименование			// Имя страницы реестра контента
+				//			КоличествоЭлементовНаСтранице	// выводимое количество элементов на страницу
+				//			СтраницаНаименование			// Имя страницы реестра контента
 				//			СтраницаАдреснаяСтрока			// Адрес страницы, имя начального файла
 				//			СтраницаПолнаяАдреснаяСтрока	// Полная адресная строка до страницы реестра контента
 				//		}
@@ -201,7 +203,8 @@
 
 			If ($MainConnect->Boo_Use1CManager == True) {
 				$_ReturnValue = $this->getTypesContentsPageFromBase1CMethod($MainConnect, $All_Message, $SystemValue);
-			} Else {				$_ReturnValue = False;
+			} Else {
+				$_ReturnValue = False;
 			}
 
 			return $_ReturnValue;
@@ -374,14 +377,17 @@
 	###------- Выходные параметры
 	###
 			If ($SystemValue !== Null && is_object($SystemValue) && $SystemValue->getUseValueBD() == True)
-				echo "<link href=\"./" . $SystemValue->getStylesDir() . "style.css\" type=text/css rel=stylesheet>\n";
+				If ($SystemValue !== Null && is_object($SystemValue) && $SystemValue->B_IsMobilePlatform == True)
+					echo "<link href=\"." . DS . $SystemValue->getStylesDir() . "style_m.css\" type=text/css rel=stylesheet>\n";
+				Else
+					echo "<link href=\"." . DS . Str_StylesDir . DS . "style.css\" type=text/css rel=stylesheet>\n";
 			Else
-				echo "<link href=\"./" . Str_StylesDir . DS . "style.css\" type=text/css rel=stylesheet>\n";
+				echo "<link href=\"." . DS . Str_StylesDir . DS . "style.css\" type=text/css rel=stylesheet>\n";
 			If ($this->_Str_PageIdent === "Настройки системы") {
 				If ($SystemValue !== Null && is_object($SystemValue) && $SystemValue->getUseValueBD() == True)
-					echo "<link href=\"./" . $SystemValue->getStylesDir() . "styleConfig.css\" type=text/css rel=stylesheet>\n";
+					echo "<link href=\"." . DS . $SystemValue->getStylesDir() . "styleConfig.css\" type=text/css rel=stylesheet>\n";
 				Else
-					echo "<link href=\"./" . Str_StylesDir . DS . "styleConfig.css\" type=text/css rel=stylesheet>\n";
+					echo "<link href=\"." . DS . Str_StylesDir . DS . "styleConfig.css\" type=text/css rel=stylesheet>\n";
 			}
 			//echo "<meta HTTP-EQUIV=\"Content-Type\" Content=\"text/html; charset=UTF-8\">";
 		}
@@ -578,7 +584,9 @@
 					ForEach ($SystemValue->getArrayPagesPortal() As $Value) {
 						//print_r($Value);
 						//If ($Str_Page === $Value["НаименованиеКраткое"]){
-						If ($this->_Str_PageIdent === $Value["НаименованиеКраткое"]){							//echo $Value["НаименованиеКраткое"] . " - " . $SystemValue->getIncludeDir() . 'PageArea/' . $Value["ИмяФайлаОбработчика"];							include($SystemValue->getIncludeDir() . 'PageArea/' . $Value["ИмяФайлаОбработчика"]);
+						If ($this->_Str_PageIdent === $Value["НаименованиеКраткое"]){
+							//echo $Value["НаименованиеКраткое"] . " - " . $SystemValue->getIncludeDir() . 'PageArea/' . $Value["ИмяФайлаОбработчика"];
+							include($SystemValue->getIncludeDir() . 'PageArea/' . $Value["ИмяФайлаОбработчика"]);
 							break;
 						}
 					}
@@ -704,7 +712,8 @@
 			If ($Result !== NULL && is_object($Result)) {
 				If (isset($Result->Error) && $Result->Error == False) {
 					$ArrResult = json_decode($Result->Result, True);
-					If (is_array($ArrResult)) {		 				$this->_Arr_ContentType = $ArrResult;
+					If (is_array($ArrResult)) {
+		 				$this->_Arr_ContentType = $ArrResult;
 					} Else {
 						$All_Message->Add_Message($Str_Object, "Ошибка получения данных заголовков контента страницы. Некорректные данные ответа", 0, "Разработчик");
 					}
@@ -742,7 +751,8 @@
 	###
 
 			$_ReturnValue = True;
-			//ForEach ($this->_Arr_ContentType As $Key => $Value) {            //
+			//ForEach ($this->_Arr_ContentType As $Key => $Value) {
+            //
 			//}
 
 			$Str_Object = "Объект 'Страница портала'";
@@ -835,7 +845,9 @@
 
 			$MainConnect->Str_HTTPWSAdress = Str_HostName . '/' . Str_DBName . '/hs/PageContentMaintenanceService/PageContentInfo/' . Str_PortalIdent . '/';
 
-			If ($TypeContent === "Новости") {            	$MainConnect->Str_HTTPWSAdress = $MainConnect->Str_HTTPWSAdress . '01/';			} ElseIf ($TypeContent === "Статьи") {
+			If ($TypeContent === "Новости") {
+            	$MainConnect->Str_HTTPWSAdress = $MainConnect->Str_HTTPWSAdress . '01/';
+			} ElseIf ($TypeContent === "Статьи") {
             	$MainConnect->Str_HTTPWSAdress = $MainConnect->Str_HTTPWSAdress . '02/';
 			} ElseIf ($TypeContent === "Проекты") {
             	$MainConnect->Str_HTTPWSAdress = $MainConnect->Str_HTTPWSAdress . '04/';
@@ -901,13 +913,15 @@
 	###  Считывание данных контента страницы
 	### getTextContentPageFromBase1CMethod(Connections Connection, ErrorOfModul All_Message, SystemConfig SystemValue)
 	### 	Читает данные контента страницы из базы методом 1С (HTTP запрос)
-		private function getTextContentPageFromBase1CMethod(&$MainConnect, $All_Message, &$SystemValue) {	###------- Входные параметры
+		private function getTextContentPageFromBase1CMethod(&$MainConnect, $All_Message, &$SystemValue) {
+	###------- Входные параметры
 	###  Connections Connections			- Объект содержащий сведения о подключении
 	###  ErrorOfModul ErrorOfModul			- Объект хранения сообщений по системе
 	###  SystemConfig SystemValue			- Объект конфигурации приложения
 	###------- Выходные параметры
 	###
-	###@@@@@@@@@@@@@@@@@@@@@
+
+	###@@@@@@@@@@@@@@@@@@@@@
 		}
 
 
