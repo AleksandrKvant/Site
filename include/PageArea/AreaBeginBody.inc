@@ -24,29 +24,40 @@ Else
 <div class="LeftPanel">
 <?php
 	//Построение меню для WEB страницы
-	If ($SystemValue !== Null && is_object($SystemValue) && $SystemValue->getUseValueBD() == True) {
-		If (count($SystemValue->getMenuPortal()) > 0) {
+	If ($SystemValue !== Null && is_object($SystemValue) && $SystemValue->getUseValueBD() == True) {
+
+		If (count($SystemValue->getMenuPortal()) > 0) {
+
 			$_Str_HTMLMenu = "<ul class=\"UlMainMenuSyte\">";
 
-			ForEach ($SystemValue->getMenuPortal() as $Value) {
-				If ((bool)$Value["ВыводитьВМеню"]) {					$_Str_HTMLMenu = $_Str_HTMLMenu . "<li class=\"LiMainMenuSyte\"><a href=\"" . $Value["АдреснаяСтрока"] . getNewGetForAdresStroka() . "\">" . $Value["НаименованиеМеню"] . "</a></li>";				}
+			ForEach ($SystemValue->getMenuPortal() as $Value) {
+
+				If ((bool)$Value["ВыводитьВМеню"]) {
+					$_Str_HTMLMenu = $_Str_HTMLMenu . "<li class=\"LiMainMenuSyte\"><a href=\"" . $Value["АдреснаяСтрока"] . getNewGetForAdresStroka() . "\">" . $Value["НаименованиеМеню"] . "</a></li>";
+				}
 				//print_r($Value);
 				//echo "<br/>";
-/*<ul>
+/*
+<ul>
 <li class="LiMainMenuSyte">
 <a href="index.html">Главная</a>
 </li>
 			print_r($SystemValue->getMenuPortal());
 */
 			}
-			$_Str_HTMLMenu = $_Str_HTMLMenu . "</ul>";			echo $_Str_HTMLMenu;
+			$_Str_HTMLMenu = $_Str_HTMLMenu . "</ul>";
+			echo $_Str_HTMLMenu;
 		}
 	}
 
 ?>
 	<div class="MetricsPanel">
 <?php
-	If ($SystemValue !== Null && is_object($SystemValue) && $SystemValue->getUseValueBD() == True) {		If ((bool)$SystemValue->B_UseYandexMetriks) {			echo $SystemValue->S_YandexMetriks;		}		If ((bool)$SystemValue->B_UseGoogleMetriks) {
+	If ($SystemValue !== Null && is_object($SystemValue) && $SystemValue->getUseValueBD() == True) {
+		If ((bool)$SystemValue->B_UseYandexMetriks) {
+			echo $SystemValue->S_YandexMetriks;
+		}
+		If ((bool)$SystemValue->B_UseGoogleMetriks) {
 			echo $SystemValue->S_GoogleMetriks;
 		}
 	}

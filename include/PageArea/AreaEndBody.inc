@@ -34,11 +34,14 @@
 			<td>
 			</td>
 <?php
-	If (isset($Mas_CountRecord) && is_array($Mas_CountRecord)) {?>
+	If (isset($Mas_CountRecord) && is_array($Mas_CountRecord)) {
+?>
 			<td width = "250px" class = "main_TextDown" align = "right">
 				<div class = "main_TextDown"><?php
 		$Str_Stroka = strval($Mas_CountRecord[0]);
-		While (strlen($Str_Stroka) < 6) {			$Str_Stroka = "0" . $Str_Stroka;		}
+		While (strlen($Str_Stroka) < 6) {
+			$Str_Stroka = "0" . $Str_Stroka;
+		}
 		echo "Д:" . $Str_Stroka;
 
 		$Str_Stroka = strval($Mas_CountRecord[1]);
@@ -71,7 +74,8 @@
 	</table>
 </div>
 <?php
-	If ($SystemValue->getUseCoockies() && ((isset($ActivUser) && is_object($ActivUser) && !$ActivUser->getUseCookies()) || (!$_SESSION['Log_CookiesOn']))) {?>
+	If ($SystemValue->getUseCoockies() && ((isset($ActivUser) && is_object($ActivUser) && !$ActivUser->getUseCookies()) || (!$_SESSION['Log_CookiesOn']))) {
+?>
 	<div class = "CookiesPanel">
 		<H3>Сайт и Cookies</H3>
 		<p>На этом сайте используются файлы cookie. Нажимая ПРИНЯТЬ вы разрешаете их использование. <a href="termsofuse.php" target="new" title="Прочитать Правила использования">Подробнее</a>

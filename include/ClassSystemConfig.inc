@@ -15,6 +15,7 @@
 	////////////////////////////////////////////////////
 	###////// Открытые
 	###
+	### B_IsMobilePlatform		:Boolean				- Признак использования мобильной версии сайта
 	### Arr_TipesSites;			:Array					- Массив доступных видов сайтов
 	### Arr_TypesBaner;			:Array					- Массив доступных видов типов банеров
 	### B_UseConfData;			:Boolean				- Признак, что порталом используются конфиденциальные данные
@@ -35,7 +36,19 @@
 	### B_UseGoogleMetriks;		:Boolean				- Использовать Google метрику
 	### S_GoogleMetriks;		:String					- Текст Google метрики
 	### S_ActivePage;			:String					- Наименование активной страницы
-	###------------------------------------------------
+	### $S_SystemName;			:String					- Наименование приложения
+	### $S_SiteName;			:String					- Интернет-наименование сайта
+	### $S_FindContent;			:String					- Поисковый контент портала
+	### $S_Version;				:String					- Версия системы
+	### $D_DateVersion;			:Data					- Дата версии системы
+	### $S_EmailContact;		:String					- Почта контактная
+	### $S_EmailTechService;	:String					- Почта технической поддержки
+	### $S_TelefonContact;		:String					- Телефон контактная
+	### $S_TelefonTechService;	:String					- Телефон технической поддержки
+	### $S_Autor;				:String					- Авторское право
+	### $S_Designer;			:String					- Дизайнер
+	### $S_Developer;			:String					- Разработчик
+###------------------------------------------------
 	###////// Внутренние
 	###	B_NS;					:Array					- Массив содержащий данные переменных для обновления
 	###	Arr_EMail;				:Array					- Массив настроек EMail сервера
@@ -135,8 +148,9 @@
 	### getEngineDataVersion()				:Data		- Прочитать значение даты версии движка считанной из БД
 	### getMenuPortal()						:Array		- Получить значение переменной класса Меню
 	### getArrayPagesPortal()				:Array		- Получить значение переменной класса Страницы портала
+	### checkMobileDevice()					:Bool		- Установка признака использования мобильного устройства
 	### ConfirmEMailByText(Object Connections, Object ErrorOfModul, String S_TextConfirm)
-	###										:bool		- Подтверждение адреса электронной почты
+	###										:Вool		- Подтверждение адреса электронной почты
 	### insertLogMessage()					:Bool		- записать ошибки в файлы и в объект "собщения"
 	### ReadTypesSites(Object Connections, Object ErrorOfModul)
 	### 									:Array 		- прочитать типы возможных страниц в виде дерева
@@ -176,6 +190,7 @@
 	##########      Свойства класса        #############
 	////////////////////////////////////////////////////
 	### Открытые свойств1а
+		public $B_IsMobilePlatform;			// Признак использования мобильной версии сайта
 		public $Arr_TipesSites;				// Массив доступных видов сайтов
 		public $Arr_TypesBaner;				// Массив доступных видов типов банеров
 		public $S_SystemName;				// Наименование приложения
@@ -254,6 +269,7 @@
 	###  Object - объект типа "SystemConfig"
 	###
 			// Задаю первоначальные значения
+			$this->B_IsMobilePlatform = False;
 			$this->B_UseConfData = False;				// Признак, что порталом используются конфиденциальные данные
 			$this->B_UseNews = False;					// Признак, что порталом используется новостная лента
 			$this->B_EngineShow = False;
@@ -283,10 +299,13 @@
 			$this->Arr_Menu = Array();                  // Массив меню портала
 			$this->Arr_Pages = Array();					// Массив страниц портала
 			$this->S_ActivePage = "Стартовая";			// Наименование активной страницы
+			
+			$this->B_IsMobilePlatform = $this->checkMobileDevice();
 
 			// Читаю данные из базы
 			$All_Message->Add_Message("Приложение", "Начало получения данных портала", 0, "Разработчик");
-			If ($MainConnect->Boo_Use1CManager == True) {
+			If ($MainConnect->Boo_Use1CManager == True) {
+
 				//	HTTP://<ИмяСервера>:порт>/<ИмяКонфигурации>/hs/<КорневойURL>/<Шаблон>
 				//	http://noutpc/ManagerPortals/hs/PortalMaintenanceService/PortalInfo/ROP00000000000000002/
 				$MainConnect->Str_HTTPWSAdress = Str_HostName . '/' . Str_DBName . '/hs/PortalMaintenanceService/PortalInfo/' . Str_PortalIdent . '/';
@@ -382,7 +401,8 @@
 
 					}
 					$Result->close();
-				} Else {					$All_Message->Log_GlobalError = True;
+				} Else {
+					$All_Message->Log_GlobalError = True;
 				}
 
 				// Скорректировать массив свойств сессии
@@ -415,9 +435,9 @@
 	###
 			//$this->$_Name_Var = $_Value_Var;
 
-			return true;
+			return True;
 		}
-    ###@@@@@@@@@@@@@@@@@@@@@
+	###@@@@@@@@@@@@@@@@@@@@@
 
 	###@@@@@@@@@@@@@@@@@@@@@
 	### __get(String Name_Var)
@@ -430,7 +450,7 @@
 	###
 			return False;
 		}
-    ###@@@@@@@@@@@@@@@@@@@@@
+	###@@@@@@@@@@@@@@@@@@@@@
 
 	###@@@@@@@@@@@@@@@@@@@@@
 	### setCurrentActivePage(Object Connections, Object ErrorOfModul)
@@ -444,7 +464,12 @@
 			$ReturnValue = True;
 
 			If (strlen($Value) > 0)
-				ForEach ($this->Arr_Pages As $PageValue) {					$_S_Temp = '/' . $PageValue['АдреснаяСтрока'] . '/i';					If (preg_match($_S_Temp, $Value)) {						$this->S_ActivePage = $PageValue['НаименованиеКраткое'];					}				}
+				ForEach ($this->Arr_Pages As $PageValue) {
+					$_S_Temp = '/' . $PageValue['АдреснаяСтрока'] . '/i';
+					If (preg_match($_S_Temp, $Value)) {
+						$this->S_ActivePage = $PageValue['НаименованиеКраткое'];
+					}
+				}
 
 			return $ReturnValue;
 		}
@@ -467,7 +492,8 @@
 			$All_Message->Add_Message("Приложение", "Начало получения данных портала", 0, "Разработчик");
 			If ($MainConnect->Boo_Use1CManager == True) {
 				$ReturnValue = $this->readTermsOfUseFromBaseHTTPMethod($MainConnect, $All_Message);
-			} Else {
+			} Else {
+
 			}
 
 			return $ReturnValue;
@@ -522,7 +548,8 @@
 
 				$Result = NULL;
 				if ($_ReturnValue) {
-					try {						/*
+					try {
+						/*
 						$data = array
 							(
 								"Идентификатор"		=> $this->_P_ID  // Идентификатор пользователя, что бы отобрать только порталы этого пользователя
@@ -546,11 +573,13 @@
 				}
 				$MainConnect->Str_HTTPWSAdress = "";
 
-				If ($Result !== NULL && is_object($Result)) {					if (isset($Result->Error) && $Result->Error == false) { // && isset($Result->enc_value->TypesBaners)) {
+				If ($Result !== NULL && is_object($Result)) {
+					if (isset($Result->Error) && $Result->Error == false) { // && isset($Result->enc_value->TypesBaners)) {
 						$ArrResult = json_decode($Result->Result, true)['#value'];
 						if (is_array($ArrResult)) {
 							$N_IndexRow = 0;
-							Foreach($ArrResult As $Value) {								$ObjTypeBaner = new BanerType($Value['SID']);
+							Foreach($ArrResult As $Value) {
+								$ObjTypeBaner = new BanerType($Value['SID']);
 								$ObjTypeBaner->setPID($Value['PID']);
 								$ObjTypeBaner->_S_Parent = $Value['ParentSID'];
 								$ObjTypeBaner->_S_PublicName = $Value['PublicName'];
@@ -584,7 +613,8 @@
 				$SQL_Query = "SELECT `ID`, `KodPage`, `IDParent`, `NameType`, `ImageID`, `Descripton` FROM `typessytes`";
 
 				$MainConnect->SQLQuery = $SQL_Query;
-				if ($Result = $MainConnect->execSQLQuery($All_Message, $this)) {					$N_IndexRow = 0;
+				if ($Result = $MainConnect->execSQLQuery($All_Message, $this)) {
+					$N_IndexRow = 0;
 					while ($Row = $Result->fetch_row()) {
 
 						$ReturnValue[$N_IndexRow]['ID'] = (string)$Row[0];
@@ -617,12 +647,15 @@
 			$this->Arr_TypesBaner = array();
 			//Построение иерархического массива объекта
 			$ObjectsTypeBaner = Array_To_Tree($ObjectsTypeBaner);
-		    foreach ($ObjectsTypeBaner as &$Value) {				$ObjectArray = array();
+		    foreach ($ObjectsTypeBaner as &$Value) {
+				$ObjectArray = array();
 				$ObjectArray['Object'] = &$Value['Obj'];
 
 				$ChildArray = array();
 				if (isset($Value['Children'])) {
-				    foreach ($Value['Children'] as &$ChildValue) {				    	$ChildArray[]['Object'] = &$ChildValue['Obj'];					}
+				    foreach ($Value['Children'] as &$ChildValue) {
+				    	$ChildArray[]['Object'] = &$ChildValue['Obj'];
+					}
 				}
 			    $ObjectArray['Children'] = $ChildArray;
 
@@ -737,7 +770,9 @@
 	###
 			$_ReturnValue = Null;
 
-			if (strlen($SID) > 0) {				$_ReturnValue = $this->FindTypeBanerRecurse($this->Arr_TypesBaner, $SID);			}
+			if (strlen($SID) > 0) {
+				$_ReturnValue = $this->FindTypeBanerRecurse($this->Arr_TypesBaner, $SID);
+			}
 
 			return $_ReturnValue;
 		}
@@ -761,7 +796,8 @@
 			//$this->compareDataArray($this->B_NS, $All_Message);
 			$NewArrayValues = $this->B_NS;
 
-			foreach($NewArrayValues as &$Value) {				if ($Value["TypeField"] === 1) {
+			foreach($NewArrayValues as &$Value) {
+				if ($Value["TypeField"] === 1) {
 					if (isset($PostArray[$Value["NameField"]])) {
 						@$NewValue = trim((string)$PostArray[$Value["NameField"]]);
 						if (is_string($NewValue))
@@ -795,7 +831,8 @@
 						$Value["Value"] = $NewValue;
 				}
 				elseif ($Value["TypeField"] === 5) {
-					if (isset($PostArray[$Value["NameField"]])) {						@$NewValue = (string)$PostArray[$Value["NameField"]];
+					if (isset($PostArray[$Value["NameField"]])) {
+						@$NewValue = (string)$PostArray[$Value["NameField"]];
 						if (is_string($NewValue))
 //							if (controlInputField($All_Message, $NewValue, true)){
 							try {
@@ -803,7 +840,8 @@
 								if ($Value["Value"] != $NewValue)
 									$Value["Value"] = $NewValue;
 							}
-							catch (Exception $e){							}
+							catch (Exception $e){
+							}
 //							}
 					}
 				}
@@ -814,7 +852,8 @@
 			else
 				$RetunResult = true;
 /*
-foreach ($this->B_NS as $Value) {	echo print_r($Value) . "<br />";
+foreach ($this->B_NS as $Value) {
+	echo print_r($Value) . "<br />";
 }
 
 foreach ($NewArrayValues as $Value) {
@@ -822,7 +861,8 @@ foreach ($NewArrayValues as $Value) {
 }
 */
 
-			if ($NeedSave && $RetunResult)				$RetunResult = $this->saveConfig($MainConnect, $All_Message, $NewArrayValues);
+			if ($NeedSave && $RetunResult)
+				$RetunResult = $this->saveConfig($MainConnect, $All_Message, $NewArrayValues);
 
 			return $RetunResult;
 		}
@@ -1219,9 +1259,29 @@ foreach ($NewArrayValues as $Value) {
 	###@@@@@@@@@@@@@@@@@@@@@
 
 	###@@@@@@@@@@@@@@@@@@@@@
+	### checkMobileDevice()
+	### 	Установка признака использования мобильного устройства
+	public function checkMobileDevice() {
+		###------- Входные параметры
+		### ....
+		###------- Выходные параметры
+		###  Boolean		- признак использования мобильного устройства
+		###
+			$mobile_agent_array = array('ipad', 'iphone', 'android', 'pocket', 'palm', 'windows ce', 'windowsce', 'cellphone', 'opera mobi', 'ipod', 'small', 'sharp', 'sonyericsson', 'symbian', 'opera mini', 'nokia', 'htc_', 'samsung', 'motorola', 'smartphone', 'blackberry', 'playstation portable', 'tablet browser');
+			$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+			// var_dump($agent);exit;
+			Foreach ($mobile_agent_array as $value) {
+				If (strpos($agent, $value) !== False) return True;
+			}
+			return False;
+		}
+	###@@@@@@@@@@@@@@@@@@@@@
+	
+	###@@@@@@@@@@@@@@@@@@@@@
 	### ConfirmEMailByText(Object Connections, Object ErrorOfModul, String S_EMail, String S_TextConfirm)
 	###		Подтвердить адрес электронной почты
-		public function ConfirmEMailByText($MainConnect, $All_Message, $S_EMail, $S_TextConfirm) {	###------- Входные параметры
+		public function ConfirmEMailByText($MainConnect, $All_Message, $S_EMail, $S_TextConfirm) {
+	###------- Входные параметры
 	###  Object Connections			- Объект содержащий сведения о подключении
 	###  Object ErrorOfModul		- Объект хранения сообщений по системе
 	###  String $S_EMail			- EMail для подтверждения
@@ -1231,7 +1291,8 @@ foreach ($NewArrayValues as $Value) {
 	###
 			$ReturnValue = True;
 
-			if ($MainConnect->Boo_Use1CManager == True) {
+			if ($MainConnect->Boo_Use1CManager == True) {
+
 				//	HTTP://<ИмяСервера>:порт>/<ИмяКонфигурации>/hs/<КорневойURL>/<Шаблон>
 				//	http://localhost/ManagerPortals/hs/UsersMaintenanceService/UserLogin/ROP00000000000000002/
 				$Str_hsAdress = Str_HostName . '/' . Str_DBName . '/hs/PortalMaintenanceService/ConfirmEMailByString/' . Str_PortalIdent . '/';
@@ -1297,7 +1358,8 @@ foreach ($NewArrayValues as $Value) {
 				$Str_DBName = "Подтверждение адреса электронной почты";
 				if (strlen($S_EMail) == 0 || strlen($S_TextConfirm) == 0)
 					$ReturnValue = false;
-				else {					//Доработать проверку  существования текста подтверждения и записать логи, в случае некорректного
+				else {
+					//Доработать проверку  существования текста подтверждения и записать логи, в случае некорректного
 					$SQL_Query = "SELECT `AdressEMail`, `Confirm`, `ConfirmText`, `ConfirmTextDate"
 						. "` FROM `tableemailusers` WHERE `AdressEMail` = '" . $MainConnect->ConnectDB->real_escape_string($S_EMail) . "' AND `ConfirmText` = '" . $S_TextConfirm
 						. "' AND `Confirm` = '0'";
@@ -1308,15 +1370,20 @@ foreach ($NewArrayValues as $Value) {
 							$MainConnect->insertLogMessage($All_Message, $Message, $this);
 							$ReturnValue = false;
 						}
-						else{							$SQL_Query = "UPDATE `tableemailusers` SET `Confirm` = '1', `ConfirmText` = '', `DateConfirm` = '" . date("Y-m-d H:i:s")
+						else{
+							$SQL_Query = "UPDATE `tableemailusers` SET `Confirm` = '1', `ConfirmText` = '', `DateConfirm` = '" . date("Y-m-d H:i:s")
 								. "' WHERE `tableemailusers`.`AdressEMail` = '" . $MainConnect->ConnectDB->real_escape_string($S_EMail) . "' AND `tableemailusers`.`ConfirmText` = '" . $S_TextConfirm
 								. "' AND `tableemailusers`.`Confirm` = '0'";
 							$ReturnValue = $MainConnect->execSQLQuery($All_Message, $this, $SQL_Query);
 						}
 					}
-					else{						$Message = "Ошибка выполнения запроса: '" . $SQL_Query . "' - '" . $MainConnect->error . "'";						$All_Message->add_Message($Str_DBName, $Message, 2, "Разработчик", $MainConnect->errno);
-						$MainConnect->insertLogMessage($All_Message, $Message, $this);						$ReturnValue = false;
-					}				}
+					else{
+						$Message = "Ошибка выполнения запроса: '" . $SQL_Query . "' - '" . $MainConnect->error . "'";
+						$All_Message->add_Message($Str_DBName, $Message, 2, "Разработчик", $MainConnect->errno);
+						$MainConnect->insertLogMessage($All_Message, $Message, $this);
+						$ReturnValue = false;
+					}
+				}
 			}
 
 			return $ReturnValue;
@@ -1508,7 +1575,11 @@ foreach ($NewArrayValues as $Value) {
 			$_B_OpenRow = False;
 			$_Arr_PostTypes = array();
 
-			If ($FieldPostSelectTypes !== "") {				If (isset($Arr_Post[$FieldPostSelectTypes]) && $Arr_Post[$FieldPostSelectTypes] !== "") {					$_Arr_PostTypes = explode(", ", $Arr_Post[$FieldPostSelectTypes]);				}			}
+			If ($FieldPostSelectTypes !== "") {
+				If (isset($Arr_Post[$FieldPostSelectTypes]) && $Arr_Post[$FieldPostSelectTypes] !== "") {
+					$_Arr_PostTypes = explode(", ", $Arr_Post[$FieldPostSelectTypes]);
+				}
+			}
 
 			If ($B_ReadOnly === False) {
 				$_Arr_TypesBaners = &$this->Arr_TypesBaner;
@@ -1560,9 +1631,14 @@ foreach ($NewArrayValues as $Value) {
 
 					If (Isset($Arr_Post['TypeSytes_' . $_Obj_Type->_P_ID]))
 						$_ReturnValue .= "checked ";
-					Elseif (count($_Arr_PostTypes) > 0) {						Foreach ($_Arr_PostTypes as $El_Temp) {							If ($El_Temp === 'TypeSytes_' . $_Obj_Type->_P_ID) {								$_ReturnValue .= "checked ";
-								break;							}
-						}					}
+					Elseif (count($_Arr_PostTypes) > 0) {
+						Foreach ($_Arr_PostTypes as $El_Temp) {
+							If ($El_Temp === 'TypeSytes_' . $_Obj_Type->_P_ID) {
+								$_ReturnValue .= "checked ";
+								break;
+							}
+						}
+					}
 					Elseif (Isset($_Obj_Baner) && Is_object($_Obj_Baner)){
 						If ($_Obj_Baner->IsHaveType($_Obj_Type->getSID()) && !$Value['Delete'])
 							$_ReturnValue .= "checked ";
@@ -1636,13 +1712,19 @@ foreach ($NewArrayValues as $Value) {
 			$_BeginNum = 0;
 			$_LastNum = $this->N_NumPagesInfo - 1;
 
-			If ($this->N_NumPage > ($this->N_StepPages + 1)) {				$_BeginNum = $this->N_NumPage - $this->N_StepPages;			}
-			If ($_LastNum > ($this->N_NumPage + $this->N_StepPages)) {				$_LastNum = $this->N_NumPage + $this->N_StepPages;			}
-
-			If ($_BeginNum > 0) {				$_ReturnValue .= "<a href=\"" . $Str_AdresPage . "" . getNewGetForAdresStroka($Arr_Get) . "\">\<\<</a> <a href=\"#\">\<</a> ";
+			If ($this->N_NumPage > ($this->N_StepPages + 1)) {
+				$_BeginNum = $this->N_NumPage - $this->N_StepPages;
+			}
+			If ($_LastNum > ($this->N_NumPage + $this->N_StepPages)) {
+				$_LastNum = $this->N_NumPage + $this->N_StepPages;
 			}
 
-			For ($i = $_BeginNum; $i <= $_LastNum; $i++) {				$_ArrayForGet = $_Arr_AdressRaw;
+			If ($_BeginNum > 0) {
+				$_ReturnValue .= "<a href=\"" . $Str_AdresPage . "" . getNewGetForAdresStroka($Arr_Get) . "\">\<\<</a> <a href=\"#\">\<</a> ";
+			}
+
+			For ($i = $_BeginNum; $i <= $_LastNum; $i++) {
+				$_ArrayForGet = $_Arr_AdressRaw;
 				$Ind = 0;
 				$ElFoud = False;
 				Foreach ($_ArrayForGet As $Param => $Value) {
@@ -1978,9 +2060,11 @@ Array ( [0] => Array ( [Object] => BanerType Object ( [_P_ID] => [_S_ID:protecte
 	###@@@@@@@@@@@@@@@@@@@@@
 	### CorrectProperty(Array SessionArray)
 	### 	Дополнить данные временного массива Сессии
-		private function CorrectProperty($Arr_Sess) {
+		private function CorrectProperty($Arr_Sess) {
+
 			If (!$this->B_ControlIP)
-				$Arr_Sess['S_OldIPUser'] = "";
+				$Arr_Sess['S_OldIPUser'] = "";
+
 			If (!$this->B_ControlClient)
 				$Arr_Sess['S_OldClient'] = "";
 		}
@@ -2225,11 +2309,15 @@ Array ( [0] => Array ( [Object] => BanerType Object ( [_P_ID] => [_S_ID:protecte
 			// Формирование SQL запроса для обновления данных в таблице настроек
 				$SQL_Query = "";
 
-				Foreach($this->B_NS as $Key => $Value) {					If ($Value["Value"] !== $DataArray[$Key]["Value"]) {						If (is_string($DataArray[$Key]["Value"]))
+				Foreach($this->B_NS as $Key => $Value) {
+					If ($Value["Value"] !== $DataArray[$Key]["Value"]) {
+						If (is_string($DataArray[$Key]["Value"]))
 							$SaveValue = addslashes($DataArray[$Key]["Value"]);
 						Else
 							$SaveValue = $DataArray[$Key]["Value"];
-						$SQL_Query .= "UPDATE `managerbaners`.`cfgtable` SET `Value` = '" . $SaveValue . "' WHERE `cfgtable`.`ArgumentName` = '" . $Key . "';";					}
+
+						$SQL_Query .= "UPDATE `managerbaners`.`cfgtable` SET `Value` = '" . $SaveValue . "' WHERE `cfgtable`.`ArgumentName` = '" . $Key . "';";
+					}
 				}
 
 				$MainConnect->SQLQuery = $SQL_Query;
